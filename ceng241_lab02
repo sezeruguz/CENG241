@@ -1,0 +1,127 @@
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+
+struct Student {
+    string name;
+    string surname;
+    int studentID;
+    string department;
+};
+
+// Function to add a new student
+void addStudent(vector<Student>& students) {
+    Student newStudent;
+    cout << "Enter Name: ";
+    cin >> newStudent.name;
+    cout << "Enter Surname: ";
+    cin >> newStudent.surname;
+    cout << "Enter Student ID: ";
+    cin >> newStudent.studentID;
+    cout << "Enter Department: ";
+    cin >> newStudent.department;
+
+    // Check for duplicate ID (Bonus Challenge)
+    for (const auto& student : students) {
+        if (student.studentID == newStudent.studentID) {
+            cout << "Error: Student with ID " << newStudent.studentID << " already exists.\n";
+            return;
+        }
+    }
+
+    students.push_back(newStudent);
+    cout << "Student added successfully!\n";
+}
+
+// Function to remove a student
+void removeStudent(vector<Student>& students) {
+    int id;
+    cout << "Enter Student ID to remove: ";
+    cin >> id;
+    for (auto it = students.begin(); it != students.end(); ++it) {
+        if (it->studentID == id) {
+            students.erase(it);
+            cout << "Student removed successfully!\n";
+            return;
+        }
+    }
+    cout << "Error: Student not found.\n";
+}
+
+// Function to update a student's information
+void updateStudent(vector<Student>& students) {
+    int id;
+    cout << "Enter Student ID to update: ";
+    cin >> id;
+    for (auto& student : students) {
+        if (student.studentID == id) {
+            cout << "Enter new Name: ";
+            cin >> student.name;
+            cout << "Enter new Surname: ";
+            cin >> student.surname;
+            cout << "Enter new Department: ";
+            cin >> student.department;
+            cout << "Student information updated successfully!\n";
+            return;
+        }
+    }
+    cout << "Error: Student not found.\n";
+}
+
+// Function to print all registered students
+void printStudents(const vector<Student>& students) {
+    if (students.empty()) {
+        cout << "No students registered yet.\n";
+        return;
+    }
+    cout << "\n--- Registered Students ---\n";
+    for (const auto& student : students) {
+        cout << "Name: " << student.name
+             << ", Surname: " << student.surname
+             << ", Student ID: " << student.studentID
+             << ", Department: " << student.department << endl;
+    }
+}
+
+// Function to display the menu
+void displayMenu() {
+    cout << "\n-- Student Registration System ---\n";
+    cout << "1. Add a New Student\n";
+    cout << "2. Remove a Student\n";
+    cout << "3. Update Student Information\n";
+    cout << "4. Print All Registered Students\n";
+    cout << "5. Exit\n";
+    cout << "Choose an option: ";
+}
+
+int main() {
+    vector<Student> students;
+    int choice;
+
+    do {
+        displayMenu();
+        cin >> choice;
+        switch (choice) {
+            case 1:
+                addStudent(students);
+                break;
+            case 2:
+                removeStudent(students);
+                break;
+            case 3:
+                updateStudent(students);
+                break;
+            case 4:
+                printStudents(students);
+                break;
+            case 5:
+                cout << "Exiting the program...\n";
+                break;
+            default:
+                cout << "Invalid option, please try again.\n";
+        }
+    } while (choice != 5);
+
+    return 0;
+}
