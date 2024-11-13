@@ -1,0 +1,86 @@
+#include <iostream>
+using namespace std;
+
+class Complex {
+private:
+    double real;
+    double imag;
+
+public:
+    // Default constructor (0 + 0i)
+    Complex() : real(0), imag(0) {}
+
+    // Parameterized constructor
+    Complex(double r, double i) : real(r), imag(i) {}
+
+    // Getter and Setter functions
+    double getReal() const { return real; }
+    double getImag() const { return imag; }
+    void setReal(double r) { real = r; }
+    void setImag(double i) { imag = i; }
+
+    // Overloading the addition operator
+    Complex operator+(const Complex &other) const {
+        return Complex(real + other.real, imag + other.imag);
+    }
+
+    // Overloading the subtraction operator
+    Complex operator-(const Complex &other) const {
+        return Complex(real - other.real, imag - other.imag);
+    }
+
+    // Overloading the multiplication operator
+    Complex operator*(const Complex &other) const {
+        return Complex(real * other.real - imag * other.imag, real * other.imag + imag * other.real);
+    }
+
+    // Overloading the equality operator
+    bool operator==(const Complex &other) const {
+        return (real == other.real && imag == other.imag);
+    }
+
+    // Overloading the << operator for output
+    friend ostream& operator<<(ostream &out, const Complex &c) {
+        out << c.real << " + " << c.imag << "i";
+        return out;
+    }
+
+    // Overloading the >> operator for input
+    friend istream& operator>>(istream &in, Complex &c) {
+        cout << "Enter the real part: ";
+        in >> c.real;
+        cout << "Enter the imaginary part: ";
+        in >> c.imag;
+        return in;
+    }
+};
+
+int main() {
+    Complex c1(3, 4);     // 3 + 4i
+    Complex c2(1, 2);     // 1 + 2i
+
+    // Addition
+    Complex sum = c1 + c2;
+    cout << "Sum: " << sum << endl;
+
+    // Subtraction
+    Complex diff = c1 - c2;
+    cout << "Difference: " << diff << endl;
+
+    // Multiplication
+    Complex product = c1 * c2;
+    cout << "Product: " << product << endl;
+
+    // Equality check
+    if (c1 == c2)
+        cout << "c1 and c2 are equal." << endl;
+    else
+        cout << "c1 and c2 are not equal." << endl;
+
+    // Input from the user
+    Complex c3;
+    cin >> c3;
+    cout << "You entered: " << c3 << endl;
+
+    return 0;
+}
